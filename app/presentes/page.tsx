@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft, Gift, Heart, Search } from "lucide-react";
 import { toast } from "sonner";
-import { Navbar } from "./_componentes/Navbar";
 import { AdminLogin } from "./_componentes/AdminLogin";
 import { GiftCard } from "./_componentes/GiftCard";
 import { ReserveDialog } from "./_componentes/ReserveDialog";
@@ -50,9 +49,11 @@ export default function PresentesPage() {
       }
       const data = await response.json();
       setPresentes(data);
+      setIsLoading(false);
     } catch (error) {
       console.error("Erro ao buscar presentes:", error);
       toast.error("Erro ao buscar presentes");
+      setIsLoading(false);
     }
   };
 
@@ -223,8 +224,6 @@ export default function PresentesPage() {
 
   return (
     <div className="min-h-screen bg-cream">
-      <Navbar />
-
       <div className="pt-24 pb-16">
         <div className="container mx-auto px-4">
           {/* Back Button */}
@@ -272,9 +271,6 @@ export default function PresentesPage() {
             />
             {isAdmin && (
               <>
-                <Button onClick={() => setIsAddDialogOpen(true)}>
-                  Adicionar Presente
-                </Button>
                 <AddGiftDialog onGiftAdded={fetchPresentes} />
               </>
             )}
@@ -328,17 +324,7 @@ export default function PresentesPage() {
                 {filteredPresentes.map((presente) => (
                   <GiftCard
                     key={presente.id}
-                    presente={{
-                      id: presente.id,
-                      nome: presente.nome,
-                      descricao: presente.descricao,
-                      preco: presente.preco,
-                      link: presente.link,
-                      imagemUrl: presente.imagemUrl,
-                      reservado: presente.reservado,
-                      reservadoPor: presente.reservadoPor,
-                      categoria: presente.categoria,
-                    }}
+                    presente={presente}
                     onDelete={isAdmin ? handleDeletePresente : undefined}
                     onReserve={
                       !isAdmin && !presente.reservado

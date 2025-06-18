@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
+import { ImageUpload } from "./ImageUpload";
 
 interface Categoria {
   id: number;
@@ -180,14 +181,9 @@ export function AddPresenteDialog({
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="imagemUrl">URL da Imagem</Label>
-            <Input
-              id="imagemUrl"
-              type="url"
-              value={imagemUrl}
-              onChange={(e) => setImagemUrl(e.target.value)}
-              placeholder="https://..."
-              disabled={isLoading}
+            <ImageUpload
+              onImageUpload={(url) => setImagemUrl(url)}
+              currentImageUrl={imagemUrl}
             />
           </div>
           <DialogFooter>

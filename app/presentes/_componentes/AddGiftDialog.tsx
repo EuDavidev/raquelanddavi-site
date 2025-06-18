@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
+import { ImageUpload } from "./ImageUpload";
 
 interface Categoria {
   id: number;
@@ -34,6 +35,7 @@ export function AddGiftDialog({ onGiftAdded }: AddGiftDialogProps) {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const [imagemUrl, setImagemUrl] = useState<string>("");
 
   useEffect(() => {
     const fetchCategorias = async () => {
@@ -74,8 +76,10 @@ export function AddGiftDialog({ onGiftAdded }: AddGiftDialogProps) {
       preco: parseFloat(formData.get("preco") as string),
       categoriaId: parseInt(formData.get("categoriaId") as string),
       link: formData.get("link") || undefined,
-      imagem: formData.get("imagem") || undefined,
+      imagemUrl: imagemUrl || undefined,
     };
+
+    console.log("Dados sendo enviados:", data);
 
     try {
       const response = await fetch("/api/presentes", {
@@ -90,6 +94,7 @@ export function AddGiftDialog({ onGiftAdded }: AddGiftDialogProps) {
 
       toast.success("Presente cadastrado com sucesso!");
       setOpen(false);
+      setImagemUrl(""); // Limpar a imagem após cadastro
       onGiftAdded();
     } catch (error) {
       toast.error("Erro ao cadastrar presente");
@@ -106,7 +111,7 @@ export function AddGiftDialog({ onGiftAdded }: AddGiftDialogProps) {
           Adicionar Presente
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-terracotta-dark">
             Cadastrar Novo Presente
@@ -172,12 +177,12 @@ export function AddGiftDialog({ onGiftAdded }: AddGiftDialogProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="imagem">URL da Imagem (opcional)</Label>
-            <Input
-              id="imagem"
-              name="imagem"
-              type="url"
-              placeholder="https://..."
+            <ImageUpload
+              onImageUpload={(url) => {
+                console.log("URL da imagem recebida:", url);
+                setImagemUrl(url);
+              }}
+              currentImageUrl={imagemUrl}
             />
           </div>
 

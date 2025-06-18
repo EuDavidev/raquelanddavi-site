@@ -35,6 +35,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     console.log("Dados recebidos para cadastro:", body);
+    console.log("URL da imagem:", body.imagemUrl);
 
     await prisma.$executeRaw`
       INSERT INTO Presente (

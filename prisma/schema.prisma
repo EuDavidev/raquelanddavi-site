@@ -8,19 +8,21 @@ datasource db {
 }
 
 model Presente {
-  id          Int       @id @default(autoincrement())
-  nome        String
-  descricao   String?   @db.Text
-  preco       Float?
-  link        String?   @db.VarChar(255)
-  imagem      String?   @db.Text
-  imagemUrl   String?   @db.Text
-  reservado   Boolean   @default(false)
-  reservadoPor String?  @db.VarChar(100)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  categoria   Categoria @relation(fields: [categoriaId], references: [id])
-  categoriaId Int
+  id                Int       @id @default(autoincrement())
+  nome              String
+  descricao         String?   @db.Text
+  preco             Float?
+  link              String?   @db.VarChar(255)
+  imagem            String?   @db.Text
+  imagemUrl         String?   @db.Text
+  reservado         Boolean   @default(false)
+  reservadoPor      String?   @db.VarChar(100)
+  reservadoEmail    String?   @db.VarChar(255)
+  reservadoMensagem String?   @db.Text
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  categoria         Categoria @relation(fields: [categoriaId], references: [id])
+  categoriaId       Int
 }
 
 model Categoria {

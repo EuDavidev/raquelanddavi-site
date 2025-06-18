@@ -37,7 +37,7 @@ export function BuscaInicialDialog({
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="nome">Digite seu nome completo</Label>
+            <Label htmlFor="nome">Digite seu nome</Label>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-terracotta" />
               <Input

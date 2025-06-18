@@ -46,6 +46,13 @@ export function GiftCard({
   const [isDeleting, setIsDeleting] = useState(false);
   const [isReserving, setIsReserving] = useState(false);
 
+  // Debug: verificar se a imagem está chegando
+  console.log(`GiftCard ${presente.id}:`, {
+    nome: presente.nome,
+    imagemUrl: presente.imagemUrl,
+    temImagem: !!presente.imagemUrl,
+  });
+
   const handleDelete = async () => {
     if (isDeleting || !onDelete) return;
 
@@ -100,14 +107,30 @@ export function GiftCard({
         )}
       </CardHeader>
       <CardContent>
-        {presente.imagemUrl && (
+        {presente.imagemUrl ? (
           <div className="relative w-full h-48 mb-4">
-            <Image
-              src={presente.imagemUrl}
-              alt={presente.nome}
-              fill
-              className="object-cover rounded-md"
+            <img
+              src={
+                presente.imagemUrl?.replace(
+                  "via.placeholder.com",
+                  "placehold.co"
+                ) ?? ""
+              }
+              alt={presente.nome ?? ""}
+              style={{
+                width: "100%",
+                height: "192px",
+                objectFit: "cover",
+                borderRadius: "8px",
+              }}
+              onError={(e) => {
+                console.error("Erro ao carregar imagem:", presente.imagemUrl);
+              }}
             />
+          </div>
+        ) : (
+          <div className="w-full h-48 mb-4 bg-gray-100 rounded-md flex items-center justify-center">
+            <span className="text-gray-400">Sem imagem</span>
           </div>
         )}
         {presente.descricao && (
@@ -143,17 +166,27 @@ export function GiftCard({
             size="sm"
             onClick={handleDelete}
             disabled={isDeleting}
+            className="bg-red-500 hover:bg-red-600"
           >
             <Trash2 className="h-4 w-4" />
           </Button>
         )}
         {isAdmin && presente.reservado && onCancelReserva && (
-          <Button variant="outline" size="sm" onClick={handleCancelReserva}>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleCancelReserva}
+            className="border-terracotta text-terracotta hover:bg-terracotta hover:text-white"
+          >
             <X className="h-4 w-4" />
           </Button>
         )}
         {!isAdmin && !presente.reservado && onReserve && (
-          <Button onClick={handleReserve} disabled={isReserving}>
+          <Button
+            onClick={handleReserve}
+            disabled={isReserving}
+            className="bg-terracotta hover:bg-terracotta-dark text-white"
+          >
             Reservar
           </Button>
         )}

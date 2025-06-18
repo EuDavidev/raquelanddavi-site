@@ -1,19 +1,20 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Playfair_Display, Montserrat } from "next/font/google"
-import "./globals.css"
+import type React from "react";
+import type { Metadata } from "next";
+import { Playfair_Display, Montserrat } from "next/font/google";
+import { Navbar } from "@/components/Navbar";
+import "./globals.css";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-serif",
   display: "swap",
-})
+});
 
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
-})
+});
 
 export const metadata: Metadata = {
   title: "Raquel & Davi - Casamento 21 de Setembro 2025",
@@ -24,7 +25,8 @@ export const metadata: Metadata = {
   authors: [{ name: "Raquel & Davi" }],
   openGraph: {
     title: "Raquel & Davi - Casamento 21 de Setembro 2025",
-    description: "Celebre conosco nosso casamento! Confirme sua presença e acompanhe todos os detalhes.",
+    description:
+      "Celebre conosco nosso casamento! Confirme sua presença e acompanhe todos os detalhes.",
     type: "website",
     locale: "pt_BR",
   },
@@ -32,17 +34,23 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-    generator: 'v0.dev'
-}
+  generator: "v0.dev",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={`${playfair.variable} ${montserrat.variable}`}>
-      <body className="font-sans antialiased">{children}</body>
+    <html
+      lang="pt-BR"
+      className={`${playfair.variable} ${montserrat.variable}`}
+    >
+      <body className="font-sans antialiased">
+        <Navbar />
+        {children}
+      </body>
     </html>
-  )
+  );
 }
