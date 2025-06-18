@@ -4,7 +4,15 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Heart, Search, Users } from "lucide-react";
+import {
+  ArrowLeft,
+  Heart,
+  Search,
+  Users,
+  CheckCircle,
+  XCircle,
+  Filter,
+} from "lucide-react";
 import { toast } from "sonner";
 import { AdminLogin } from "./_componentes/AdminLogin";
 import { ConvidadoCard } from "./_componentes/ConvidadoCard";
@@ -20,6 +28,8 @@ interface Convidado {
   confirmado: boolean;
   mensagem?: string;
 }
+
+type FilterType = "todos" | "confirmados" | "nao-confirmados";
 
 export default function ConfirmacaoPage() {
   const [convidados, setConvidados] = useState<Convidado[]>([]);
@@ -38,6 +48,8 @@ export default function ConfirmacaoPage() {
   const [showBuscaInicial, setShowBuscaInicial] = useState(true);
   const [convidadoEncontrado, setConvidadoEncontrado] =
     useState<Convidado | null>(null);
+  const [adminFilter, setAdminFilter] = useState<FilterType>("todos");
+  const [adminSearchTerm, setAdminSearchTerm] = useState("");
 
   useEffect(() => {
     fetchConvidados();
@@ -133,9 +145,14 @@ export default function ConfirmacaoPage() {
     email: string;
     mensagem: string;
   }) => {
-    if (!convidadoToEdit) return;
+    if (!convidadoToEdit) {
+      toast.error("Nenhum convidado selecionado para edição");
+      return;
+    }
 
     try {
+      console.log("Editando convidado:", convidadoToEdit.id, formData);
+
       const response = await fetch(`/api/convidados/${convidadoToEdit.id}`, {
         method: "PUT",
         headers: {
@@ -143,18 +160,25 @@ export default function ConfirmacaoPage() {
         },
         body: JSON.stringify({
           nome: formData.nome,
+          confirmado: convidadoToEdit.confirmado, // Mantém o status atual
           email: formData.email,
           mensagem: formData.mensagem,
         }),
       });
 
-      if (!response.ok) throw new Error("Erro ao atualizar convidado");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Erro ao atualizar convidado");
+      }
 
       await fetchConvidados();
       setConvidadoToEdit(null);
       toast.success("Convidado atualizado com sucesso!");
     } catch (error) {
-      toast.error("Erro ao atualizar convidado");
+      console.error("Erro ao editar convidado:", error);
+      toast.error(
+        error instanceof Error ? error.message : "Erro ao atualizar convidado"
+      );
     }
   };
 
@@ -175,6 +199,40 @@ export default function ConfirmacaoPage() {
     const nome = e.target.value;
     setSearchTerm(nome);
     buscarConvidado(nome);
+  };
+
+  // Funções para o modo admin
+  const getFilteredConvidados = () => {
+    let filtered = convidados;
+
+    // Filtrar por status
+    if (adminFilter === "confirmados") {
+      filtered = filtered.filter((c) => c.confirmado);
+    } else if (adminFilter === "nao-confirmados") {
+      filtered = filtered.filter((c) => !c.confirmado);
+    }
+
+    // Filtrar por busca
+    if (adminSearchTerm) {
+      filtered = filtered.filter(
+        (c) =>
+          c.nome.toLowerCase().includes(adminSearchTerm.toLowerCase()) ||
+          (c.email &&
+            c.email.toLowerCase().includes(adminSearchTerm.toLowerCase()))
+      );
+    }
+
+    return filtered;
+  };
+
+  const getEstatisticas = () => {
+    const total = convidados.length;
+    const confirmados = convidados.filter((c) => c.confirmado).length;
+    const naoConfirmados = total - confirmados;
+    const percentualConfirmados =
+      total > 0 ? Math.round((confirmados / total) * 100) : 0;
+
+    return { total, confirmados, naoConfirmados, percentualConfirmados };
   };
 
   if (isSubmitted) {
@@ -319,6 +377,195 @@ export default function ConfirmacaoPage() {
                   onChange={handleSearch}
                   className="pl-10 border-terracotta-light/30 focus:border-terracotta"
                 />
+              </div>
+            </div>
+          )}
+
+          {/* Admin View - Todos os Convidados */}
+          {isAdmin && !showBuscaInicial && (
+            <div className="mb-12">
+              <div className="bg-white rounded-2xl p-6 shadow-lg border border-terracotta-light/20">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="font-serif text-2xl text-terracotta-dark flex items-center gap-2">
+                    <Users className="h-6 w-6" />
+                    Visualização Administrativa
+                  </h2>
+                  <div className="text-sm text-terracotta">
+                    {getEstatisticas().total} convidados no total
+                  </div>
+                </div>
+
+                {/* Estatísticas */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                  <div className="bg-cream rounded-xl p-4 text-center">
+                    <div className="text-2xl font-bold text-terracotta-dark">
+                      {getEstatisticas().total}
+                    </div>
+                    <div className="text-sm text-terracotta">Total</div>
+                  </div>
+                  <div className="bg-green-50 rounded-xl p-4 text-center border border-green-200">
+                    <div className="text-2xl font-bold text-green-600 flex items-center justify-center gap-1">
+                      <CheckCircle className="h-5 w-5" />
+                      {getEstatisticas().confirmados}
+                    </div>
+                    <div className="text-sm text-green-600">Confirmados</div>
+                  </div>
+                  <div className="bg-red-50 rounded-xl p-4 text-center border border-red-200">
+                    <div className="text-2xl font-bold text-red-600 flex items-center justify-center gap-1">
+                      <XCircle className="h-5 w-5" />
+                      {getEstatisticas().naoConfirmados}
+                    </div>
+                    <div className="text-sm text-red-600">Não Confirmados</div>
+                  </div>
+                  <div className="bg-blue-50 rounded-xl p-4 text-center border border-blue-200">
+                    <div className="text-2xl font-bold text-blue-600">
+                      {getEstatisticas().percentualConfirmados}%
+                    </div>
+                    <div className="text-sm text-blue-600">
+                      Taxa de Confirmação
+                    </div>
+                  </div>
+                </div>
+
+                {/* Filtros */}
+                <div className="flex flex-col md:flex-row gap-4 mb-6">
+                  <div className="flex-1">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-terracotta" />
+                      <Input
+                        placeholder="Buscar por nome ou email..."
+                        value={adminSearchTerm}
+                        onChange={(e) => setAdminSearchTerm(e.target.value)}
+                        className="pl-10 border-terracotta-light/30 focus:border-terracotta"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant={adminFilter === "todos" ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setAdminFilter("todos")}
+                      className={
+                        adminFilter === "todos"
+                          ? "bg-terracotta hover:bg-terracotta-dark"
+                          : "border-terracotta text-terracotta"
+                      }
+                    >
+                      Todos
+                    </Button>
+                    <Button
+                      variant={
+                        adminFilter === "confirmados" ? "default" : "outline"
+                      }
+                      size="sm"
+                      onClick={() => setAdminFilter("confirmados")}
+                      className={
+                        adminFilter === "confirmados"
+                          ? "bg-green-600 hover:bg-green-700"
+                          : "border-green-600 text-green-600"
+                      }
+                    >
+                      <CheckCircle className="h-4 w-4 mr-1" />
+                      Confirmados
+                    </Button>
+                    <Button
+                      variant={
+                        adminFilter === "nao-confirmados"
+                          ? "default"
+                          : "outline"
+                      }
+                      size="sm"
+                      onClick={() => setAdminFilter("nao-confirmados")}
+                      className={
+                        adminFilter === "nao-confirmados"
+                          ? "bg-red-600 hover:bg-red-700"
+                          : "border-red-600 text-red-600"
+                      }
+                    >
+                      <XCircle className="h-4 w-4 mr-1" />
+                      Não Confirmados
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Lista de Convidados */}
+                <div className="space-y-3 max-h-96 overflow-y-auto">
+                  {getFilteredConvidados().length > 0 ? (
+                    getFilteredConvidados().map((convidado) => (
+                      <div
+                        key={convidado.id}
+                        className="flex items-center justify-between p-4 bg-cream rounded-xl border border-terracotta-light/20"
+                      >
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3">
+                            <div
+                              className={`w-3 h-3 rounded-full ${
+                                convidado.confirmado
+                                  ? "bg-green-500"
+                                  : "bg-red-500"
+                              }`}
+                            />
+                            <div>
+                              <h3 className="font-medium text-terracotta-dark">
+                                {convidado.nome}
+                              </h3>
+                              {convidado.email && (
+                                <p className="text-sm text-terracotta">
+                                  {convidado.email}
+                                </p>
+                              )}
+                              {convidado.mensagem && (
+                                <p className="text-sm text-terracotta/70 mt-1 italic">
+                                  "{convidado.mensagem}"
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`px-2 py-1 rounded-full text-xs font-medium ${
+                              convidado.confirmado
+                                ? "bg-green-100 text-green-700"
+                                : "bg-red-100 text-red-700"
+                            }`}
+                          >
+                            {convidado.confirmado
+                              ? "Confirmado"
+                              : "Não Confirmado"}
+                          </span>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => setConvidadoToEdit(convidado)}
+                            className="border-terracotta text-terracotta hover:bg-terracotta hover:text-white"
+                          >
+                            Editar
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleToggleConfirmacao(convidado)}
+                            className={`${
+                              convidado.confirmado
+                                ? "border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
+                                : "border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
+                            }`}
+                          >
+                            {convidado.confirmado ? "Cancelar" : "Confirmar"}
+                          </Button>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-8">
+                      <Users className="h-12 w-12 text-terracotta/50 mx-auto mb-4" />
+                      <p className="text-terracotta">
+                        Nenhum convidado encontrado com os filtros aplicados.
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           )}

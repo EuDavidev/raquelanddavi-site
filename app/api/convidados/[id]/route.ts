@@ -6,13 +6,14 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { confirmado, email, mensagem } = await request.json();
+    const { nome, confirmado, email, mensagem } = await request.json();
     const { id: idParam } = await params;
     const id = parseInt(idParam);
 
     const convidado = await prisma.$executeRaw`
       UPDATE Convidado
       SET 
+        nome = ${nome},
         confirmado = ${confirmado},
         email = ${email || null},
         mensagem = ${mensagem || null},

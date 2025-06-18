@@ -33,7 +33,18 @@ export function EditConvidadoDialog({
     const email = formData.get("email") as string;
     const mensagem = formData.get("mensagem") as string;
 
-    onEdit({ nome, email, mensagem });
+    console.log("Enviando dados do formulário:", { nome, email, mensagem });
+
+    if (!nome.trim()) {
+      toast.error("O nome é obrigatório");
+      return;
+    }
+
+    onEdit({
+      nome: nome.trim(),
+      email: email.trim(),
+      mensagem: mensagem.trim(),
+    });
   };
 
   return (
@@ -50,8 +61,9 @@ export function EditConvidadoDialog({
             <Input
               id="nome"
               name="nome"
-              defaultValue={convidado?.nome}
+              defaultValue={convidado?.nome || ""}
               required
+              placeholder="Nome do convidado"
             />
           </div>
           <div className="space-y-2">
@@ -60,7 +72,7 @@ export function EditConvidadoDialog({
               id="email"
               name="email"
               type="email"
-              defaultValue={convidado?.email}
+              defaultValue={convidado?.email || ""}
               placeholder="Email do convidado"
             />
           </div>
@@ -69,16 +81,27 @@ export function EditConvidadoDialog({
             <Textarea
               id="mensagem"
               name="mensagem"
-              defaultValue={convidado?.mensagem}
+              defaultValue={convidado?.mensagem || ""}
               placeholder="Mensagem para o convidado"
+              rows={3}
             />
           </div>
-          <Button
-            type="submit"
-            className="w-full bg-terracotta hover:bg-terracotta-dark text-white"
-          >
-            Salvar Alterações
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+              className="flex-1 border-terracotta text-terracotta hover:bg-terracotta hover:text-white"
+            >
+              Cancelar
+            </Button>
+            <Button
+              type="submit"
+              className="flex-1 bg-terracotta hover:bg-terracotta-dark text-white"
+            >
+              Salvar Alterações
+            </Button>
+          </div>
         </form>
       </DialogContent>
     </Dialog>

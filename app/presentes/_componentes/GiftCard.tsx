@@ -46,13 +46,6 @@ export function GiftCard({
   const [isDeleting, setIsDeleting] = useState(false);
   const [isReserving, setIsReserving] = useState(false);
 
-  // Debug: verificar se a imagem está chegando
-  console.log(`GiftCard ${presente.id}:`, {
-    nome: presente.nome,
-    imagemUrl: presente.imagemUrl,
-    temImagem: !!presente.imagemUrl,
-  });
-
   const handleDelete = async () => {
     if (isDeleting || !onDelete) return;
 
