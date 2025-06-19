@@ -20,9 +20,19 @@ export const metadata: Metadata = {
   title: "Raquel & Davi - Casamento 21 de Setembro 2025",
   description:
     "Celebre conosco nosso casamento! Confirme sua presença, veja nossa lista de presentes e acompanhe todos os detalhes do nosso grande dia.",
-  keywords:
-    "casamento Raquel Davi, casamento 21 setembro 2025, lista de presentes, confirmação presença, Fazenda Vista Alegre",
+  keywords: [
+    "casamento Raquel Davi",
+    "casamento 21 setembro 2025",
+    "lista de presentes",
+    "confirmação presença",
+    "Fazenda Vista Alegre",
+  ],
   authors: [{ name: "Raquel & Davi" }],
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
   openGraph: {
     title: "Raquel & Davi - Casamento 21 de Setembro 2025",
     description:
