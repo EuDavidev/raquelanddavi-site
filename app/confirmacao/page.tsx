@@ -76,26 +76,40 @@ export default function ConfirmacaoPage() {
     formData: { email: string; mensagem: string }
   ) => {
     try {
+      console.log(
+        "Confirmando presença para:",
+        convidado,
+        "com dados:",
+        formData
+      );
+
       const response = await fetch(`/api/convidados/${convidado.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          nome: convidado.nome,
           confirmado: true,
-          email: formData.email,
-          mensagem: formData.mensagem,
+          email: formData.email || null,
+          mensagem: formData.mensagem || null,
         }),
       });
 
-      if (!response.ok) throw new Error("Erro ao confirmar presença");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Erro ao confirmar presença");
+      }
 
       await fetchConvidados();
       setSelectedConvidado(null);
       setIsSubmitted(true);
       toast.success("Presença confirmada com sucesso!");
     } catch (error) {
-      toast.error("Erro ao confirmar presença");
+      console.error("Erro ao confirmar presença:", error);
+      toast.error(
+        error instanceof Error ? error.message : "Erro ao confirmar presença"
+      );
     }
   };
 
@@ -103,17 +117,31 @@ export default function ConfirmacaoPage() {
     if (!isAdmin) return;
 
     try {
+      console.log(
+        "Admin alterando confirmação para:",
+        convidado,
+        "novo status:",
+        !convidado.confirmado
+      );
+
       const response = await fetch(`/api/convidados/${convidado.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          nome: convidado.nome,
           confirmado: !convidado.confirmado,
+          // Mantém os dados existentes se estiver confirmando, limpa se estiver cancelando
+          email: !convidado.confirmado ? convidado.email : null,
+          mensagem: !convidado.confirmado ? convidado.mensagem : null,
         }),
       });
 
-      if (!response.ok) throw new Error("Erro ao atualizar convidado");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Erro ao atualizar convidado");
+      }
 
       await fetchConvidados();
       toast.success(
@@ -122,7 +150,10 @@ export default function ConfirmacaoPage() {
         } com sucesso!`
       );
     } catch (error) {
-      toast.error("Erro ao atualizar convidado");
+      console.error("Erro ao atualizar convidado:", error);
+      toast.error(
+        error instanceof Error ? error.message : "Erro ao atualizar convidado"
+      );
     }
   };
 
@@ -403,7 +434,7 @@ export default function ConfirmacaoPage() {
                 <strong>Como funciona:</strong> Digite seu nome na busca abaixo
                 e clique em "Confirmar Presença". Você pode deixar uma mensagem
                 opcional para os noivos. Não se esqueça de confirmar sua
-                presença até o dia 21 de agosto de 2025! ❤️
+                presença até o dia 21 de Setembro de 2025! ❤️
               </p>
             </div>
           </div>

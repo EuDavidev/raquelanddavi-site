@@ -321,12 +321,6 @@ export default function SobrePage() {
                   <li>
                     <strong>15:30</strong> - Cerimônia
                   </li>
-                  <li>
-                    <strong>A DEFINIR</strong> - Coquetel
-                  </li>
-                  <li>
-                    <strong>A DEFINIR</strong> - Jantar e festa
-                  </li>
                 </ul>
               </div>
 

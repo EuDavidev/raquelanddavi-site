@@ -351,8 +351,8 @@ export default function ContatoPage() {
                       <p className="font-medium text-terracotta-dark">
                         WhatsApp
                       </p>
-                      <p className="text-terracotta">Raquel: (11) 99999-1234</p>
-                      <p className="text-terracotta">Davi: (11) 99999-5678</p>
+                      <p className="text-terracotta">Raquel: (75) 99700-0244</p>
+                      <p className="text-terracotta">Davi: (75) 99990-4135</p>
                     </div>
                   </div>
 
@@ -374,7 +374,7 @@ export default function ContatoPage() {
                       <p className="font-medium text-terracotta-dark">
                         Instagram
                       </p>
-                      <p className="text-terracotta">@raquel_adlf</p>
+                      <Link href={"https://www.instagram.com/raquel_adlf/"} className="text-terracotta">@raquel_adlf</Link>
                     </div>
                   </div>
                 </CardContent>

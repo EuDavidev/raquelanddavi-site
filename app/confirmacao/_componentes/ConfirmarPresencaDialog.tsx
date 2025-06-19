@@ -23,11 +23,28 @@ export function ConfirmarPresencaDialog({
 }: ConfirmarPresencaDialogProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get("email") as string;
-    const mensagem = formData.get("mensagem") as string;
 
-    onConfirm({ email, mensagem });
+    try {
+      const formData = new FormData(e.currentTarget);
+      const email = formData.get("email") as string;
+      const mensagem = formData.get("mensagem") as string;
+
+      if (!email && !mensagem) {
+        // Se nenhum campo foi preenchido, confirma mesmo assim
+        onConfirm({ email: "", mensagem: "" });
+      } else {
+        // Valida o email se foi fornecido
+        if (email && !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+          toast.error("Por favor, insira um email válido");
+          return;
+        }
+
+        onConfirm({ email, mensagem });
+      }
+    } catch (error) {
+      console.error("Erro ao processar formulário:", error);
+      toast.error("Erro ao processar formulário");
+    }
   };
 
   return (

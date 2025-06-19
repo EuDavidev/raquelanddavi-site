@@ -13,20 +13,17 @@ import { Presente } from "./types";
 import { AddGiftDialog } from "./_componentes/AddGiftDialog";
 import { AddPresenteDialog } from "./_componentes/AddPresenteDialog";
 
-const categories = [
-  "Todos",
-  "Cozinha",
-  "Eletrodomésticos",
-  "Quarto",
-  "Sala",
-  "Mesa",
-  "Experiências",
-];
+type Categoria = {
+  id: number;
+  nome: string;
+  descricao: string;
+};
 
 export default function PresentesPage() {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [searchTerm, setSearchTerm] = useState("");
   const [presentes, setPresentes] = useState<Presente[]>([]);
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [selectedPresente, setSelectedPresente] = useState<Presente | null>(
     null
   );
@@ -39,7 +36,22 @@ export default function PresentesPage() {
 
   useEffect(() => {
     fetchPresentes();
+    fetchCategorias();
   }, []);
+
+  const fetchCategorias = async () => {
+    try {
+      const response = await fetch("/api/categorias");
+      if (!response.ok) {
+        throw new Error("Erro ao buscar categorias");
+      }
+      const data = await response.json();
+      setCategorias(data);
+    } catch (error) {
+      console.error("Erro ao buscar categorias:", error);
+      toast.error("Erro ao buscar categorias");
+    }
+  };
 
   const fetchPresentes = async () => {
     try {
@@ -213,7 +225,8 @@ export default function PresentesPage() {
   const filteredPresentes = presentes.filter((presente) => {
     const matchesCategory =
       selectedCategory === "Todos" ||
-      presente.categoriaId.toString() === selectedCategory;
+      categorias.find((c) => c.id === presente.categoriaId)?.nome ===
+        selectedCategory;
     const matchesSearch = searchTerm
       ? presente.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
         (presente.descricao?.toLowerCase().includes(searchTerm.toLowerCase()) ??
@@ -293,20 +306,32 @@ export default function PresentesPage() {
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
+              <Button
+                key="Todos"
+                variant={selectedCategory === "Todos" ? "default" : "outline"}
+                onClick={() => setSelectedCategory("Todos")}
+                className={
+                  selectedCategory === "Todos"
+                    ? "bg-terracotta hover:bg-terracotta-dark text-white"
+                    : "border-terracotta text-terracotta hover:bg-terracotta hover:text-white"
+                }
+              >
+                Todos
+              </Button>
+              {categorias.map((categoria) => (
                 <Button
-                  key={category}
+                  key={categoria.id}
                   variant={
-                    selectedCategory === category ? "default" : "outline"
+                    selectedCategory === categoria.nome ? "default" : "outline"
                   }
-                  onClick={() => setSelectedCategory(category)}
+                  onClick={() => setSelectedCategory(categoria.nome)}
                   className={
-                    selectedCategory === category
+                    selectedCategory === categoria.nome
                       ? "bg-terracotta hover:bg-terracotta-dark text-white"
                       : "border-terracotta text-terracotta hover:bg-terracotta hover:text-white"
                   }
                 >
-                  {category}
+                  {categoria.nome}
                 </Button>
               ))}
             </div>

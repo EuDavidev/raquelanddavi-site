@@ -6,17 +6,42 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { nome, confirmado, email, mensagem } = await request.json();
+    const body = await request.json();
     const { id: idParam } = await params;
     const id = parseInt(idParam);
 
+    // Validar campos obrigatórios
+    if (body.confirmado === undefined) {
+      return NextResponse.json(
+        { error: "O campo 'confirmado' é obrigatório" },
+        { status: 400 }
+      );
+    }
+
+    // Se estiver atualizando apenas o status de confirmação
+    if (body.confirmado === false) {
+      const convidado = await prisma.$executeRaw`
+        UPDATE Convidado
+        SET 
+          confirmado = false,
+          email = NULL,
+          mensagem = NULL,
+          updatedAt = NOW()
+        WHERE id = ${id}
+      `;
+      return NextResponse.json({ success: true });
+    }
+
+    // Se estiver confirmando presença ou atualizando dados
     const convidado = await prisma.$executeRaw`
       UPDATE Convidado
       SET 
-        nome = ${nome},
-        confirmado = ${confirmado},
-        email = ${email || null},
-        mensagem = ${mensagem || null},
+        nome = COALESCE(${body.nome}, nome),
+        confirmado = ${body.confirmado},
+        email = ${body.email === undefined ? prisma.raw("email") : body.email},
+        mensagem = ${
+          body.mensagem === undefined ? prisma.raw("mensagem") : body.mensagem
+        },
         updatedAt = NOW()
       WHERE id = ${id}
     `;
