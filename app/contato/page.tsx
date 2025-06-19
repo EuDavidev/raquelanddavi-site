@@ -19,6 +19,8 @@ import {
   CheckCircle,
   Menu,
 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import useWeb3Forms from "@web3forms/react";
 
 export default function ContatoPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -29,32 +31,36 @@ export default function ContatoPage() {
     message: "",
   });
 
-  // Correção: acessar a variável de ambiente client-side
-  const web3formsKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitSuccessful, isSubmitting },
+  } = useForm({ mode: "onTouched" });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [result, setResult] = useState("");
 
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        access_key: web3formsKey,
-        name: formData.name,
-        email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-      }),
-    });
+  const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "SUA_CHAVE_AQUI";
 
-    if (response.ok) {
-      setIsSubmitted(true);
-    } else {
-      alert("Erro ao enviar mensagem. Tente novamente.");
-    }
-  };
+  const { submit: onSubmit } = useWeb3Forms({
+    access_key: accessKey,
+    settings: {
+      from_name: "Raquel & Davi",
+      subject: "Nova mensagem de contato do site",
+    },
+    onSuccess: (msg, data) => {
+      setIsSuccess(true);
+      setResult("Mensagem enviada com sucesso! Obrigado pelo contato.");
+      reset();
+    },
+    onError: (msg, data) => {
+      setIsSuccess(false);
+      setResult(
+        "Ocorreu um erro ao enviar sua mensagem. Tente novamente mais tarde."
+      );
+    },
+  });
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -234,19 +240,20 @@ export default function ContatoPage() {
               </CardHeader>
 
               <CardContent className="p-8">
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="name">Nome Completo *</Label>
                       <Input
                         id="name"
-                        required
-                        value={formData.name}
-                        onChange={(e) =>
-                          handleInputChange("name", e.target.value)
-                        }
+                        {...register("name", { required: "Nome obrigatório" })}
                         className="border-terracotta-light/30 focus:border-terracotta"
                       />
+                      {errors.name && (
+                        <span className="text-red-500 text-sm">
+                          {errors.name.message as string}
+                        </span>
+                      )}
                     </div>
 
                     <div>
@@ -254,13 +261,16 @@ export default function ContatoPage() {
                       <Input
                         id="email"
                         type="email"
-                        required
-                        value={formData.email}
-                        onChange={(e) =>
-                          handleInputChange("email", e.target.value)
-                        }
+                        {...register("email", {
+                          required: "E-mail obrigatório",
+                        })}
                         className="border-terracotta-light/30 focus:border-terracotta"
                       />
+                      {errors.email && (
+                        <span className="text-red-500 text-sm">
+                          {errors.email.message as string}
+                        </span>
+                      )}
                     </div>
                   </div>
 
@@ -268,43 +278,52 @@ export default function ContatoPage() {
                     <Label htmlFor="subject">Assunto *</Label>
                     <Input
                       id="subject"
-                      required
-                      placeholder="Ex: Dúvidas sobre o local, informações sobre hospedagem"
-                      value={formData.subject}
-                      onChange={(e) =>
-                        handleInputChange("subject", e.target.value)
-                      }
+                      {...register("subject", {
+                        required: "Assunto obrigatório",
+                      })}
                       className="border-terracotta-light/30 focus:border-terracotta"
                     />
+                    {errors.subject && (
+                      <span className="text-red-500 text-sm">
+                        {errors.subject.message as string}
+                      </span>
+                    )}
                   </div>
 
                   <div>
                     <Label htmlFor="message">Mensagem *</Label>
                     <Textarea
                       id="message"
-                      required
-                      placeholder="Digite sua mensagem aqui..."
-                      value={formData.message}
-                      onChange={(e) =>
-                        handleInputChange("message", e.target.value)
-                      }
-                      className="border-terracotta-light/30 focus:border-terracotta"
                       rows={6}
+                      {...register("message", {
+                        required: "Mensagem obrigatória",
+                      })}
+                      className="border-terracotta-light/30 focus:border-terracotta"
                     />
+                    {errors.message && (
+                      <span className="text-red-500 text-sm">
+                        {errors.message.message as string}
+                      </span>
+                    )}
                   </div>
 
                   <Button
                     type="submit"
                     className="w-full bg-terracotta hover:bg-terracotta-dark text-white py-3"
-                    disabled={
-                      !formData.name ||
-                      !formData.email ||
-                      !formData.subject ||
-                      !formData.message
-                    }
+                    disabled={isSubmitting}
                   >
-                    Enviar Mensagem
+                    {isSubmitting ? "Enviando..." : "Enviar Mensagem"}
                   </Button>
+
+                  {result && (
+                    <div
+                      className={`text-center mt-4 ${
+                        isSuccess ? "text-green-600" : "text-red-600"
+                      }`}
+                    >
+                      {result}
+                    </div>
+                  )}
 
                   <p className="text-sm text-gray-500 text-center">
                     * Campos obrigatórios
@@ -332,8 +351,8 @@ export default function ContatoPage() {
                       <p className="font-medium text-terracotta-dark">
                         WhatsApp
                       </p>
-                      <p className="text-terracotta">Ana: (11) 99999-1234</p>
-                      <p className="text-terracotta">Carlos: (11) 99999-5678</p>
+                      <p className="text-terracotta">Raquel: (11) 99999-1234</p>
+                      <p className="text-terracotta">Davi: (11) 99999-5678</p>
                     </div>
                   </div>
 
