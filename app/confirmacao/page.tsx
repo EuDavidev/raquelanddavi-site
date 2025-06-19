@@ -12,6 +12,7 @@ import {
   CheckCircle,
   XCircle,
   Filter,
+  Menu,
 } from "lucide-react";
 import { toast } from "sonner";
 import { AdminLogin } from "./_componentes/AdminLogin";
@@ -272,15 +273,15 @@ export default function ConfirmacaoPage() {
   return (
     <div className="min-h-screen bg-cream">
       <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-terracotta-light/20">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-3 sm:py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
-              <Heart className="h-6 w-6 text-terracotta" />
-              <span className="font-serif text-xl text-terracotta-dark">
+              <Heart className="h-5 w-5 sm:h-6 sm:w-6 text-terracotta" />
+              <span className="font-serif text-lg sm:text-xl text-terracotta-dark">
                 Raquel & Davi
               </span>
             </div>
-            <div className="hidden md:flex space-x-8">
+            <div className="hidden md:flex space-x-6 lg:space-x-8">
               <Link
                 href="/"
                 className="text-terracotta-dark hover:text-terracotta transition-colors"
@@ -308,6 +309,62 @@ export default function ConfirmacaoPage() {
               <Link
                 href="/contato"
                 className="text-terracotta-dark hover:text-terracotta transition-colors"
+              >
+                Contato
+              </Link>
+            </div>
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  // Como esta página já tem muitos estados, vou usar uma função simples
+                  const menuElement = document.querySelector(
+                    ".mobile-menu-dropdown"
+                  );
+                  if (menuElement) {
+                    menuElement.classList.toggle("hidden");
+                  }
+                }}
+                className="p-2"
+              >
+                <span className="sr-only">Menu</span>
+                <Menu className="h-5 w-5 text-terracotta-dark" />
+              </Button>
+            </div>
+          </div>
+
+          {/* Mobile menu dropdown */}
+          <div className="md:hidden mobile-menu-dropdown hidden absolute top-full left-0 right-0 bg-white border-b border-terracotta-light/20 shadow-lg">
+            <div className="container mx-auto px-4 py-4 space-y-3">
+              <Link
+                href="/"
+                className="block text-terracotta-dark hover:text-terracotta transition-colors py-2"
+              >
+                Home
+              </Link>
+              <Link
+                href="/sobre"
+                className="block text-terracotta-dark hover:text-terracotta transition-colors py-2"
+              >
+                Nossa História
+              </Link>
+              <Link
+                href="/presentes"
+                className="block text-terracotta-dark hover:text-terracotta transition-colors py-2"
+              >
+                Lista de Presentes
+              </Link>
+              <Link
+                href="/confirmacao"
+                className="block text-terracotta hover:text-terracotta-dark transition-colors py-2 font-medium"
+              >
+                Confirmar Presença
+              </Link>
+              <Link
+                href="/contato"
+                className="block text-terracotta-dark hover:text-terracotta transition-colors py-2"
               >
                 Contato
               </Link>
