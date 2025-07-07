@@ -12,6 +12,7 @@ import { ReserveDialog } from "./_componentes/ReserveDialog";
 import { Presente } from "./types";
 import { AddGiftDialog } from "./_componentes/AddGiftDialog";
 import { AddPresenteDialog } from "./_componentes/AddPresenteDialog";
+import { EditPresenteDialog } from "./_componentes/EditPresenteDialog";
 
 type Categoria = {
   id: number;
@@ -33,6 +34,8 @@ export default function PresentesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isReserveDialogOpen, setIsReserveDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [editingPresente, setEditingPresente] = useState<Presente | null>(null);
 
   useEffect(() => {
     fetchPresentes();
@@ -164,6 +167,44 @@ export default function PresentesPage() {
       console.error("Erro ao adicionar presente:", error);
       toast.error("Erro ao adicionar presente");
     }
+  };
+
+  const handleEditPresente = async (data: {
+    nome: string;
+    descricao?: string;
+    preco?: number;
+    link?: string;
+    imagemUrl?: string;
+    categoriaId: number;
+  }) => {
+    if (!editingPresente) return;
+
+    try {
+      const response = await fetch(`/api/presentes/${editingPresente.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao editar presente");
+      }
+
+      toast.success("Presente editado com sucesso!");
+      setIsEditDialogOpen(false);
+      setEditingPresente(null);
+      fetchPresentes();
+    } catch (error) {
+      console.error("Erro ao editar presente:", error);
+      toast.error("Erro ao editar presente");
+    }
+  };
+
+  const handleOpenEditDialog = (presente: Presente) => {
+    setEditingPresente(presente);
+    setIsEditDialogOpen(true);
   };
 
   const handleCancelReserva = async (presenteId: number) => {
@@ -361,6 +402,7 @@ export default function PresentesPage() {
                         ? handleCancelReserva
                         : undefined
                     }
+                    onEdit={isAdmin ? handleOpenEditDialog : undefined}
                     isAdmin={isAdmin}
                   />
                 ))}
@@ -417,6 +459,17 @@ export default function PresentesPage() {
         isOpen={isAddDialogOpen}
         onClose={() => setIsAddDialogOpen(false)}
         onAdd={handleAddPresente}
+      />
+
+      <EditPresenteDialog
+        presente={editingPresente}
+        isOpen={isEditDialogOpen}
+        onClose={() => {
+          setIsEditDialogOpen(false);
+          setEditingPresente(null);
+        }}
+        onEdit={handleEditPresente}
+        categorias={categorias}
       />
     </div>
   );

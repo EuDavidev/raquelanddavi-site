@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ExternalLink, Gift, Trash2, X } from "lucide-react";
+import { ExternalLink, Gift, Trash2, X, Edit } from "lucide-react";
 import Image from "next/image";
 import { Presente } from "../types";
 import { toast } from "sonner";
@@ -33,6 +33,7 @@ interface GiftCardProps {
   onDelete?: (id: number) => void;
   onReserve?: (id: number) => void;
   onCancelReserva?: (id: number) => void;
+  onEdit?: (presente: any) => void;
   isAdmin?: boolean;
 }
 
@@ -41,6 +42,7 @@ export function GiftCard({
   onDelete,
   onReserve,
   onCancelReserva,
+  onEdit,
   isAdmin = false,
 }: GiftCardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -153,6 +155,16 @@ export function GiftCard({
         )}
       </CardContent>
       <CardFooter className="flex justify-end gap-2">
+        {isAdmin && onEdit && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => onEdit(presente)}
+            className="border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white"
+          >
+            <Edit className="h-4 w-4" />
+          </Button>
+        )}
         {isAdmin && onDelete && (
           <Button
             variant="destructive"

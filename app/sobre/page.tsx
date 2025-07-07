@@ -167,17 +167,16 @@ export default function SobrePage() {
                       O Primeiro Encontro
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Nos encontramos no meio do corredor do colégio onde
-                      estudávamos. Ela perguntou o nome da mãe de Davi para
-                      confirmar se era o mesmo Davi que as suas tias e sua
-                      própria mãe falavam. A partir daí, começamos a conversar.
-                      Foi o início de uma linda história de amor.
+                      Nossa história começa aqui, duas crianças traquinas que só
+                      pensavam em se divertir e não faziam ideia do que o futuro
+                      lhes preparava, depois deste dias nunca mais nos virmos ou
+                      se quer conversamos até que...
                     </p>
                   </div>
                 </div>
                 <div className="order-1 md:order-2">
                   <Image
-                    src="/placeholder.svg?height=400&width=500"
+                    src="/foto-1.jpg?height=400&width=500"
                     alt="Primeiro encontro - 2022"
                     width={500}
                     height={400}
@@ -190,7 +189,7 @@ export default function SobrePage() {
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div>
                   <Image
-                    src="/placeholder.svg?height=400&width=500"
+                    src="/foto-2.jpg?height=400&width=500"
                     alt="Início do namoro - 2022"
                     width={500}
                     height={400}
@@ -211,10 +210,9 @@ export default function SobrePage() {
                       Oficializando o Amor
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Após meses de conversas e encontros, decidimos oficializar
-                      nosso relacionamento. Foi um momento mágico, cheio de
-                      promessas e sonhos compartilhados. Desde então, nossa
-                      história só tem crescido.
+                      Em 2022 nos encontramos, começamos a conversar e tivemos
+                      nosso primeiro encontro que por acaso foi no dia dos
+                      namorados kkkkk...
                     </p>
                   </div>
                 </div>
@@ -229,24 +227,22 @@ export default function SobrePage() {
                         <MapPin className="h-6 w-6 text-white" />
                       </div>
                       <span className="font-serif text-2xl text-terracotta-dark">
-                        2023
+                        2022
                       </span>
                     </div>
                     <h3 className="font-serif text-xl text-terracotta-dark mb-3">
-                      Nosso Primeiro Trabalho
+                      Início do Namoro
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Após nos formarmos no ensino médio, fomos em busca de um
-                      trabalho para crescer profissionalmente, e foi então que
-                      fomos chamados para trabalhar em uma loja de Departamentos
-                      em Alagoinhas-Ba.
+                      Nossa história só tinha acabado de começar, começamos a
+                      namorar e no mesmo ano nos formamos juntos...
                     </p>
                   </div>
                 </div>
                 <div className="order-1 md:order-2">
                   <Image
-                    src="/placeholder.svg?height=400&width=500"
-                    alt="Nossa primeira casa - 2022"
+                    src="/foto-3.jpg?height=400&width=500"
+                    alt="Início do namoro"
                     width={500}
                     height={400}
                     className="rounded-2xl shadow-xl hover:scale-105 transition-transform duration-700"
@@ -258,7 +254,7 @@ export default function SobrePage() {
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div>
                   <Image
-                    src="/placeholder.svg?height=400&width=500"
+                    src="/foto-4.jpg?height=400&width=500"
                     alt="Pedido de casamento - 2023"
                     width={500}
                     height={400}
@@ -277,14 +273,44 @@ export default function SobrePage() {
                       O Pedido Especial
                     </h3>
                     <p className="leading-relaxed opacity-90">
-                      Em um dia de aniversário de namoro, Davi preparou uma
-                      surpresa para Raquel. Ele foi com ela a um restaurante,
-                      mas eles foram em carros diferentes. Raquel chegou
-                      primeiro e, quando Davi chegou, ele estava com um buquê de
-                      flores e um anel de noivado.
+                      Em 2024 aconteceu a realização de um dos nossos maiores
+                      sonhos o tão sonhado pedido de casamento, nossos pais nos
+                      abençoaram e vibraram conosco...
                     </p>
                   </div>
                 </div>
+              </div>
+
+              {/* Nosso noivado */}
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                  <div className="bg-terracotta text-white rounded-2xl p-8 shadow-lg">
+                    <div className="flex items-center space-x-3 mb-4">
+                      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                        <Heart className="h-6 w-6 text-terracotta" />
+                      </div>
+                      <span className="font-serif text-2xl">2024</span>
+                    </div>
+                    <h3 className="font-serif text-xl mb-3">
+                      Nosso Noivado
+                    </h3>
+                    <p className="leading-relaxed opacity-90">
+                      Em 2024 aconteceu a realização de um dos nossos maiores
+                      sonhos o tão sonhado pedido de casamento, nossos pais nos
+                      abençoaram e vibraram conosco...
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <Image
+                    src="/foto-5.jpg?height=400&width=500"
+                    alt="Pedido de casamento - 2024"
+                    width={500}
+                    height={400}
+                    className="rounded-2xl shadow-xl hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
+                
               </div>
             </div>
           </div>

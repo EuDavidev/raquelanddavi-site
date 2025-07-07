@@ -53,6 +53,10 @@ export async function PUT(
       where: { id },
       data: {
         nome: data.nome,
+        descricao: data.descricao,
+        preco: data.preco,
+        link: data.link,
+        imagemUrl: data.imagemUrl,
         categoriaId: data.categoriaId,
         updatedAt: new Date(),
       },
