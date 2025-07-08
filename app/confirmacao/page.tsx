@@ -434,7 +434,7 @@ export default function ConfirmacaoPage() {
                 <strong>Como funciona:</strong> Digite seu nome na busca abaixo
                 e clique em "Confirmar Presença". Você pode deixar uma mensagem
                 opcional para os noivos. Não se esqueça de confirmar sua
-                presença até o dia 21 de Setembro de 2025! ❤️
+                presença até o dia 15 de Agosto de 2025! ❤️
               </p>
             </div>
           </div>
