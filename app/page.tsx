@@ -154,7 +154,7 @@ export default function HomePage() {
                 <div className="flex items-center justify-center lg:justify-start space-x-3">
                   <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-terracotta flex-shrink-0" />
                   <span className="text-sm sm:text-base text-terracotta-dark">
-                    Rosa Linda Espaço de Eventos, Alagoinahs, Bahia
+                    Rosa Linda Espaço de Eventos, Alagoinhas, Bahia
                   </span>
                 </div>
               </div>
