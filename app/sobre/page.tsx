@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Heart, ArrowLeft, Calendar, MapPin, Menu, X } from "lucide-react";
+import { Heart, ArrowLeft, Calendar, MapPin, Menu, X, Gem } from "lucide-react";
 import { useState } from "react";
 
 export default function SobrePage() {
@@ -160,17 +160,14 @@ export default function SobrePage() {
                         <Calendar className="h-6 w-6 text-white" />
                       </div>
                       <span className="font-serif text-2xl text-terracotta-dark">
-                        2022
+                        2007
                       </span>
                     </div>
                     <h3 className="font-serif text-xl text-terracotta-dark mb-3">
                       O Primeiro Encontro
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Nossa história começa aqui, duas crianças traquinas que só
-                      pensavam em se divertir e não faziam ideia do que o futuro
-                      lhes preparava, depois deste dias nunca mais nos virmos ou
-                      se quer conversamos até que...
+                      Nossa história começa aqui, duas crianças traquinas que só pensavam em se divertir e não faziam ideia do que o futuro lhes preparava. Depois daqueles dias, nunca mais nos vimos ou sequer conversamos, até que...
                     </p>
                   </div>
                 </div>
@@ -210,21 +207,19 @@ export default function SobrePage() {
                       Oficializando o Amor
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Em 2022 nos encontramos, começamos a conversar e tivemos
-                      nosso primeiro encontro que por acaso foi no dia dos
-                      namorados kkkkk...
+                      Em 2022, nos encontramos, começamos a conversar e tivemos nosso primeiro encontro, que, por acaso, foi no Dia dos Namorados. Kkkk...
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* 2023 - Nosso primeiro trabalho */}
+              {/* 2023 - Início do Namoro */}
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="order-2 md:order-1">
                   <div className="bg-white rounded-2xl p-8 shadow-lg border border-terracotta-light/20">
                     <div className="flex items-center space-x-3 mb-4">
                       <div className="w-12 h-12 bg-terracotta rounded-full flex items-center justify-center">
-                        <MapPin className="h-6 w-6 text-white" />
+                        <Heart className="h-6 w-6 text-white" />
                       </div>
                       <span className="font-serif text-2xl text-terracotta-dark">
                         2022
@@ -234,8 +229,7 @@ export default function SobrePage() {
                       Início do Namoro
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Nossa história só tinha acabado de começar, começamos a
-                      namorar e no mesmo ano nos formamos juntos...
+                      E tudo ainda estava apenas no começo. Começamos a namorar e, no mesmo ano, nos formamos juntos.
                     </p>
                   </div>
                 </div>
@@ -250,8 +244,51 @@ export default function SobrePage() {
                 </div>
               </div>
 
+              {/* 2024 - Primeira Viagem */}
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                  <Image
+                    src="/foto-6.jpg?height=400&width=500"
+                    alt="Pedido de casamento - 2023"
+                    width={500}
+                    height={400}
+                    className="rounded-2xl shadow-xl hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
+                <div>
+                  <div className="bg-white rounded-2xl p-8 shadow-lg border border-terracotta-light/20">
+                    <div className="flex items-center space-x-3 mb-4">
+                      <div className="w-12 h-12 bg-terracotta rounded-full flex items-center justify-center">
+                        <MapPin className="h-6 w-6  text-white" />
+                      </div>
+                      <span className="font-serif text-2xl">2023</span>
+                    </div>
+                    <h3 className="font-serif text-xl mb-3">Primeira Viagem</h3>
+                    <p className="leading-relaxed opacity-90">
+                      Em 2023, fizemos nossa primeira viagem em família, e com o tempo nosso amor só crescia cada vez mais...
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               {/* 2024 - Pedido de Casamento */}
               <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                  <div className="bg-white rounded-2xl p-8 shadow-lg border border-terracotta-light/20">
+                    <div className="flex items-center space-x-3 mb-4">
+                      <div className="w-12 h-12 bg-terracotta rounded-full flex items-center justify-center">
+                        <Heart className="h-6 w-6  text-white" />
+                      </div>
+                      <span className="font-serif text-2xl">2024</span>
+                    </div>
+                    <h3 className="font-serif text-xl mb-3">
+                      O Pedido Especial
+                    </h3>
+                    <p className="leading-relaxed opacity-90">
+                      Em 2024, aconteceu a realização de um dos nossos maiores sonhos: o tão sonhado pedido de casamento. Nossos pais nos abençoaram e vibraram conosco.
+                    </p>
+                  </div>
+                </div>
                 <div>
                   <Image
                     src="/foto-4.jpg?height=400&width=500"
@@ -261,46 +298,10 @@ export default function SobrePage() {
                     className="rounded-2xl shadow-xl hover:scale-105 transition-transform duration-700"
                   />
                 </div>
-                <div>
-                  <div className="bg-terracotta text-white rounded-2xl p-8 shadow-lg">
-                    <div className="flex items-center space-x-3 mb-4">
-                      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                        <Heart className="h-6 w-6 text-terracotta" />
-                      </div>
-                      <span className="font-serif text-2xl">2024</span>
-                    </div>
-                    <h3 className="font-serif text-xl mb-3">
-                      O Pedido Especial
-                    </h3>
-                    <p className="leading-relaxed opacity-90">
-                      Em 2024 aconteceu a realização de um dos nossos maiores
-                      sonhos o tão sonhado pedido de casamento, nossos pais nos
-                      abençoaram e vibraram conosco...
-                    </p>
-                  </div>
-                </div>
               </div>
 
               {/* Nosso noivado */}
               <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div>
-                  <div className="bg-terracotta text-white rounded-2xl p-8 shadow-lg">
-                    <div className="flex items-center space-x-3 mb-4">
-                      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                        <Heart className="h-6 w-6 text-terracotta" />
-                      </div>
-                      <span className="font-serif text-2xl">2024</span>
-                    </div>
-                    <h3 className="font-serif text-xl mb-3">
-                      Nosso Noivado
-                    </h3>
-                    <p className="leading-relaxed opacity-90">
-                      Em 2024 aconteceu a realização de um dos nossos maiores
-                      sonhos o tão sonhado pedido de casamento, nossos pais nos
-                      abençoaram e vibraram conosco...
-                    </p>
-                  </div>
-                </div>
                 <div>
                   <Image
                     src="/foto-5.jpg?height=400&width=500"
@@ -310,7 +311,47 @@ export default function SobrePage() {
                     className="rounded-2xl shadow-xl hover:scale-105 transition-transform duration-700"
                   />
                 </div>
-                
+                <div>
+                  <div className="bg-white rounded-2xl p-8 shadow-lg border border-terracotta-light/20">
+                    <div className="flex items-center space-x-3 mb-4">
+                      <div className="w-12 h-12 bg-terracotta rounded-full flex items-center justify-center">
+                        <Gem className="h-6 w-6  text-white" />
+                      </div>
+                      <span className="font-serif text-2xl">2024</span>
+                    </div>
+                    <h3 className="font-serif text-xl mb-3">Nosso Noivado</h3>
+                    <p className="leading-relaxed opacity-90">
+                      Em Setembro de 2024, realizamos o nosso tão sonhado noivado, onde apresentamos este momento ao Senhor, e Ele planejou tudo.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* A espera do Grande Dia */}
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                  <div className="bg-terracotta text-white rounded-2xl p-8 shadow-lg">
+                    <div className="flex items-center space-x-3 mb-4">
+                      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                        <Heart className="h-6 w-6 text-terracotta" />
+                      </div>
+                      <span className="font-serif text-2xl">2025</span>
+                    </div>
+                    <h3 className="font-serif text-xl mb-3">A espera do Grande Dia</h3>
+                    <p className="leading-relaxed opacity-90">
+                      Com a bênção de Deus e de nossos pais, estamos à espera deste dia tão sonhado que é o nosso casamento. Pedimos que estejam orando por nós, para que o Senhor possa estar presente neste dia e que as Suas bênçãos recaiam sobre nossas vidas. Te esperamos lá para nos alegrarmos juntos!
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <Image
+                    src="/Davi&Raquel-18.jpg?height=400&width=500"
+                    alt="Pedido de casamento - 2024"
+                    width={500}
+                    height={400}
+                    className="rounded-2xl shadow-xl hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -342,10 +383,10 @@ export default function SobrePage() {
                 </h3>
                 <ul className="text-gray-600 space-y-2">
                   <li>
-                    <strong>15:00</strong> - Chegada dos convidados
+                    <strong>14:30</strong> - Chegada dos convidados
                   </li>
                   <li>
-                    <strong>15:30</strong> - Cerimônia
+                    <strong>15:00</strong> - Começo da Cerimônia
                   </li>
                 </ul>
               </div>

@@ -148,7 +148,7 @@ export default function HomePage() {
                 <div className="flex items-center justify-center lg:justify-start space-x-3">
                   <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-terracotta flex-shrink-0" />
                   <span className="text-sm sm:text-base text-terracotta-dark">
-                    15:00 - Cerimônia
+                    15:00 - Começo da Cerimônia
                   </span>
                 </div>
                 <div className="flex items-center justify-center lg:justify-start space-x-3">
@@ -179,7 +179,7 @@ export default function HomePage() {
             <div className="relative order-1 lg:order-2">
               <div className="relative overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl">
                 <Image
-                  src="/placeholder.svg?height=600&width=500"
+                  src="/Davi&Raquel-10.jpg?height=600&width=500"
                   alt="Ana e Carlos - Foto do noivado"
                   width={500}
                   height={600}
@@ -214,7 +214,7 @@ export default function HomePage() {
                   <Heart className="h-6 w-6 sm:h-8 sm:w-8 text-terracotta" />
                 </div>
                 <h3 className="font-serif text-xl sm:text-2xl text-terracotta-dark mb-3 sm:mb-4">
-                  Cerimônia
+                  Começo da Cerimônia
                 </h3>
                 <p className="text-terracotta mb-3 sm:mb-4">15:00</p>
                 <p className="text-gray-600 text-sm sm:text-base">
@@ -293,7 +293,7 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="relative order-2 lg:order-1">
               <Image
-                src="/placeholder.svg?height=500&width=600"
+                src="/Davi&Raquel-26.jpg?height=500&width=600"
                 alt="Ana e Carlos - Momento especial"
                 width={600}
                 height={500}
@@ -306,16 +306,18 @@ export default function HomePage() {
                 Nossa História
               </h2>
               <p className="text-terracotta text-base sm:text-lg mb-4 sm:mb-6 leading-relaxed">
-                Ainda no cólegio, perto do término do ensino médio, derrepente
-                nos encontramos e nos reconhecemos, pois ainda bebês já tinhamos
-                uma história juntos. Desde então, nossa conexão foi instantânea
-                e especial.
+                Duas pessoas com um só propósito, dois mundos totalmente diferentes que se unem em uma só missão. Deus abençoou esta união e se fará presente em cada detalhe desta missão. Que este amor seja fortalecido por gerações.
+              </p>
+              <p className="text-terracotta text-base sm:text-lg mb-4 sm:mb-6 leading-relaxed">
+                Eclesiastes 4:12 – "Um homem sozinho pode ser vencido, mas dois conseguem defender-se. Um cordão de três dobras não se rompe com facilidade."
               </p>
               <p className="text-gray-600 mb-6 sm:mb-8 leading-relaxed text-sm sm:text-base">
+  
                 Decidimos oficializar nosso amor e queremos celebrar este
                 momento especial com as pessoas que mais amamos. Sua presença
                 tornará nosso dia ainda mais especial!
               </p>
+              
               <Button
                 asChild
                 className="bg-terracotta hover:bg-terracotta-dark text-white px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base"

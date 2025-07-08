@@ -406,7 +406,7 @@ export default function ContatoPage() {
                 Ainda não confirmou sua presença?
               </h2>
               <p className="text-terracotta mb-6">
-                Não esqueça de confirmar sua presença até 1º de junho. Sua
+                Não esqueça de confirmar sua presença até 15 de Agosto. Sua
                 confirmação nos ajuda muito no planejamento!
               </p>
               <Button
