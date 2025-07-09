@@ -306,7 +306,7 @@ export default function HomePage() {
                 Nossa História
               </h2>
               <p className="text-terracotta text-base sm:text-lg mb-4 sm:mb-6 leading-relaxed">
-                Duas pessoas com um só propósito, dois mundos totalmente diferentes que se unem em uma só história. Deus abençoou esta união e se fará presente em cada detalhe desta missão. Que este amor seja fortalecido por gerações.
+                Duas pessoas com um só propósito, dois mundos totalmente diferentes que se unem em uma só missão. Deus abençoou esta união e se fará presente em cada detalhe desta história. Que este amor seja fortalecido por gerações.
               </p>
               <p className="text-terracotta text-base sm:text-lg mb-4 sm:mb-6 leading-relaxed">
                 Eclesiastes 4:12 – "Um homem sozinho pode ser vencido, mas dois conseguem defender-se. Um cordão de três dobras não se rompe com facilidade."

@@ -642,6 +642,18 @@ export default function ConfirmacaoPage() {
                           >
                             {convidado.confirmado ? "Cancelar" : "Confirmar"}
                           </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => {
+                              if (window.confirm(`Tem certeza que deseja excluir o convidado '${convidado.nome}'?`)) {
+                                handleDeleteConvidado(convidado);
+                              }
+                            }}
+                            className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
+                          >
+                            Excluir
+                          </Button>
                         </div>
                       </div>
                     ))
