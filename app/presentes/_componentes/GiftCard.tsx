@@ -133,11 +133,6 @@ export function GiftCard({
             {presente.descricao}
           </p>
         )}
-        {presente.preco && (
-          <p className="text-lg font-semibold mb-4">
-            R$ {presente.preco.toFixed(2)}
-          </p>
-        )}
         {presente.link && (
           <a
             href={presente.link}

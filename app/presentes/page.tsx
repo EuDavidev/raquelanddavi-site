@@ -307,8 +307,12 @@ export default function PresentesPage() {
               <p className="text-terracotta-dark">
                 <strong>Como funciona:</strong> Escolha um presente, clique em
                 "Reservar" e siga as instruções. Você pode comprar online ou em
-                loja física. Não se preocupe se não quiser presentear - sua
+                loja física. Se desejar dividir o valor do presente com outro convidado, fique a vontade! 
+                Não se preocupe se não quiser presentear - sua
                 presença é o que mais importa! ❤️
+              </p>
+              <p className="text-terracotta-dark">
+                <strong>Atenção:</strong> Os presentes abaixo listados são SUGESTÕES, são possíveis para compra, mas se você desejar comprar em outro lugar ou loja fique a vontade! Só se atente para as cores. Um grande abraço!!
               </p>
             </div>
           </div>
